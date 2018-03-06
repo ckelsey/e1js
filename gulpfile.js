@@ -241,6 +241,10 @@ gulp.task("dev", ["webpack", "server", "jshint", "moveDocs", "demoService", "e2e
 	gulp.watch(paths.watch, ["webpack", "jshint", "moveDocs", "demoService", "e2e"]);
 });
 
+gulp.task("serve", ["server", "jshint", "moveDocs", "demoService", "e2e", "index"], function () {
+	gulp.watch(paths.watch, ["jshint", "moveDocs", "demoService", "e2e"]);
+});
+
 gulp.task("default", [
 	"dev"
 ], function () { });
