@@ -55,7 +55,7 @@ gulp.task('publish', function (done) {
 			console.log(stdout);
 			console.log(stderr);
 
-			fs.writeFile('dist/index.js', 'import "./e1js.js"; import "./e1js.css";', function () {
+			fs.writeFile('dist/index.js', 'import "./e1js.js";', function () {
 				var pkg = require("./package.json")
 				var ver = pkg.version.split(`.`).map((num) => { return parseInt(num) })
 				var args = process.argv
