@@ -509,7 +509,7 @@ class E1 {
 
 window.E1 = new E1()
 
-export default window.E1
+module.exports = window.E1
 
 if (window.document.readyState === `complete`) {
 	window.E1.observer.observe(window.document.body, {
