@@ -240,7 +240,7 @@ class E1 {
 
 	eval(expression) {
 		try {
-			return vm.runInNewContext(expression)
+			return vm.runInThisContext(expression)
 		} catch (e) {
 			return false
 		}
