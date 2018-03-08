@@ -482,22 +482,40 @@ class E1 {
 
 		if (elements && elements.length) {
 			elements.forEach(element => {
-				var isShown = window.document.body.contains(element)
-				var conditional = element.hasAttribute(`e1-if`) ? `e1-if` : element.hasAttribute(`e1-show`) ? `e1-show` : false
-
-				if (conditional) {
-					this.isTruthy(element.getAttribute(conditional), (truthy) => {
-						if (truthy && Array.isArray(element.onUpdate) && element.onUpdate.length) {
-							element.onUpdate.forEach((callback) => {
-								callback()
-							})
-						}
-					})
-				} else if (Array.isArray(element.onUpdate) && element.onUpdate.length) {
+				if (Array.isArray(element.onUpdate) && element.onUpdate.length) {
 					element.onUpdate.forEach((callback) => {
 						callback()
 					})
 				}
+
+				// var isShown = window.document.body.contains(element)
+				// var conditional = element.hasAttribute(`e1-if`) ? `e1-if` : element.hasAttribute(`e1-show`) ? `e1-show` : false
+
+				// if (conditional) {
+				// 	this.isTruthy(element.getAttribute(conditional), (truthy) => {
+				// 		if (truthy && Array.isArray(element.onUpdate) && element.onUpdate.length) {
+				// 			element.onUpdate.forEach((callback) => {
+				// 				callback()
+				// 			})
+				// 		}
+				// 	})
+				// } else if (Array.isArray(element.onUpdate) && element.onUpdate.length) {
+				// 	element.onUpdate.forEach((callback) => {
+				// 		callback()
+				// 	})
+				// }
+
+				// var isShown = window.document.body.contains(element)
+
+				// if ((element.hasAttribute(`e1-if`) && this.isTruthy(element.getAttribute(`e1-if`))) || (element.hasAttribute(`e1-show`) && this.isTruthy(element.getAttribute(`e1-show`)))) {
+				// 	isShown = true
+				// }
+
+				// if (isShown && Array.isArray(element.onUpdate) && element.onUpdate.length) {
+				// 	element.onUpdate.forEach((callback) => {
+				// 		callback()
+				// 	})
+				// }
 			})
 		}
 
