@@ -1,5 +1,3 @@
-const vm = require(`vm`);
-
 class E1 {
 	constructor() {
 		this.bindings = {}
@@ -213,7 +211,7 @@ class E1 {
 		return result
 	}
 
-	isTruthy(expression) {
+	isTruthy(expression, cb) {
 		var values = expression.split(/(?:\(|\)|\|\||&&|<=|<|>=|>|===|!==)+/g).map(b => { return b.trim() })
 
 		// Sorting so longest paths first
@@ -234,17 +232,13 @@ class E1 {
 			}
 		})
 
-		return this.eval(expression)
-	}
-
-	eval(expression) {
-		vm.createContext()
-
-		try {
-			return vm.runInNewContext(expression)
-		} catch (e) {
-			return false
+		var evalWorker = `self.onmessage = function (e) {self.postMessage(eval(e.data))}`
+		var workerBlob = new window.Blob([evalWorker], { type: "text/javascript" })
+		var worker = new window.Worker(window.URL.createObjectURL(workerBlob));
+		worker.onmessage = (e) => {
+			console.log(e.data)
 		}
+		worker.postMessage(expression)
 	}
 
 	registerComponent(name, service) {
@@ -484,12 +478,17 @@ class E1 {
 		if (elements && elements.length) {
 			elements.forEach(element => {
 				var isShown = window.document.body.contains(element)
+				var conditional = element.hasAttribute(`e1-if`) ? `e1-if` : element.hasAttribute(`e1-show`) ? `e1-show` : false
 
-				if ((element.hasAttribute(`e1-if`) && this.isTruthy(element.getAttribute(`e1-if`))) || (element.hasAttribute(`e1-show`) && this.isTruthy(element.getAttribute(`e1-show`)))) {
-					isShown = true
-				}
-
-				if (isShown && Array.isArray(element.onUpdate) && element.onUpdate.length) {
+				if (conditional) {
+					this.isTruthy(element.getAttribute(conditional), (truthy) => {
+						if (truthy && Array.isArray(element.onUpdate) && element.onUpdate.length) {
+							element.onUpdate.forEach((callback) => {
+								callback()
+							})
+						}
+					})
+				} else if (Array.isArray(element.onUpdate) && element.onUpdate.length) {
 					element.onUpdate.forEach((callback) => {
 						callback()
 					})
