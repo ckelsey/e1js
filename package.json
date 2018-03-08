@@ -1,7 +1,7 @@
 {
 	"name": "e1js",
 	"description": "",
-	"version": "1.0.7",
+	"version": "1.0.8",
 	"main": "dist/index.js",
 	"homepage": "https://ckelsey.github.io/e1js/",
 	"repository": {
