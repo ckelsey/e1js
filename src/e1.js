@@ -1,4 +1,5 @@
 const vm = require(`vm`);
+vm.createContext()
 
 class E1 {
 	constructor() {
@@ -238,8 +239,6 @@ class E1 {
 	}
 
 	eval(expression) {
-		vm.createContext()
-
 		try {
 			return vm.runInNewContext(expression)
 		} catch (e) {
