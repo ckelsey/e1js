@@ -233,7 +233,7 @@ class E1 {
 		})
 
 		try {
-			var evalWorker = `self.onmessage=function(e){self.postMessage(eval(e.data))}`
+			var evalWorker = `self.onmessage=function(e){try{var t=eval(e.data); self.postMessage(t);}catch(err){self.postMessage(false)}}`
 			var workerBlob = new window.Blob([evalWorker], { type: "text/javascript" })
 			var worker = new window.Worker(window.URL.createObjectURL(workerBlob));
 			worker.onmessage = (e) => {
