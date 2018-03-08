@@ -232,13 +232,20 @@ class E1 {
 			}
 		})
 
-		var evalWorker = `self.onmessage = function (e) {self.postMessage(eval(e.data))}`
-		var workerBlob = new window.Blob([evalWorker], { type: "text/javascript" })
-		var worker = new window.Worker(window.URL.createObjectURL(workerBlob));
-		worker.onmessage = (e) => {
-			console.log(e.data)
+		try {
+			var evalWorker = `self.onmessage=function(e){self.postMessage(eval(e.data))}`
+			var workerBlob = new window.Blob([evalWorker], { type: "text/javascript" })
+			var worker = new window.Worker(window.URL.createObjectURL(workerBlob));
+			worker.onmessage = (e) => {
+				console.log(e.data)
+				cb(e.data)
+			}
+			worker.postMessage(expression)
+		} catch (error) {
+			console.log("ERR", error)
+			cb(false)
 		}
-		worker.postMessage(expression)
+
 	}
 
 	registerComponent(name, service) {
