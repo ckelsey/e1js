@@ -345,9 +345,6 @@ class E1 {
 					}
 
 					this.bindings[conditionalBinding].push(_el)
-				} else {
-					console.log(conditionalBinding);
-
 				}
 			})
 		}
