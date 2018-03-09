@@ -68,38 +68,9 @@ class E1 {
 					}
 				}
 
-				var removeElementBindings = (node) => {
-					for (var p in self.bindings) {
-						if (self.bindings[p]) {
-							var binding = self.bindings[p]
-
-							if (self.bindings[p].indexOf(node)) {
-								// console.log(p, node);
-
-								// self.bindings[p].splice(self.bindings[p].indexOf(node), 1)
-							}
-						}
-					}
-				}
-
-				var loopRemovedNodes = (removedNodes) => {
-					// console.log("REMOVE", removedNodes.length);
-
-					for (var i = 0; i < removedNodes.length; i++) {
-						if (removedNodes[i].nodeType !== 3 && !removedNodes[i].hasAttribute(`e1-if`)) {
-							removeElementBindings(removedNodes[i])
-						}
-					}
-				}
-
 				records.forEach((record) => {
-					console.log(record)
 					if (record.addedNodes.length) {
 						loopAddedNodes(record.addedNodes)
-					}
-
-					if (record.removedNodes.length) {
-						// loopRemovedNodes(record.removedNodes)
 					}
 				})
 			}
@@ -368,11 +339,16 @@ class E1 {
 			bindings.forEach(binding => {
 				var conditionalBinding = binding.split(/\?|\:/g).map(b => { return b.trim() })[0]
 
-				if (!this.bindings[conditionalBinding]) {
-					this.bindings[conditionalBinding] = []
-				}
+				if (conditionalBinding && typeof conditionalBinding === "string" && conditionalBinding.indexOf("@") === 0) {
+					if (!this.bindings[conditionalBinding]) {
+						this.bindings[conditionalBinding] = []
+					}
 
-				this.bindings[conditionalBinding].push(_el)
+					this.bindings[conditionalBinding].push(_el)
+				} else {
+					console.log(conditionalBinding);
+
+				}
 			})
 		}
 
@@ -513,6 +489,12 @@ class E1 {
 
 		if (elements && elements.length) {
 			elements.forEach(element => {
+
+				if (!element.parentNode) {
+					this.bindings[path].splice(this.bindings[path].indexOf(element), 1)
+					return
+				}
+
 				if (Array.isArray(element.onUpdate) && element.onUpdate.length) {
 					element.onUpdate.forEach((callback) => {
 						callback()
