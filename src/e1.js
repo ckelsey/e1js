@@ -344,7 +344,9 @@ class E1 {
 						this.bindings[conditionalBinding] = []
 					}
 
-					this.bindings[conditionalBinding].push(_el)
+					if (this.bindings[conditionalBinding].indexOf(_el) === -1) {
+						this.bindings[conditionalBinding].push(_el)
+					}
 				}
 			})
 		}
