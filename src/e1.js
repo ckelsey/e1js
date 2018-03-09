@@ -73,8 +73,10 @@ class E1 {
 						if (self.bindings[p]) {
 							var binding = self.bindings[p]
 
-							if (binding.indexOf(node)) {
-								binding.splice(binding.indexOf(node), 1)
+							if (self.bindings[p].indexOf(node)) {
+								console.log(p, node);
+
+								// self.bindings[p].splice(self.bindings[p].indexOf(node), 1)
 							}
 						}
 					}
