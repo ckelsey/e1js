@@ -66,9 +66,29 @@ class E1 {
 					}
 				}
 
+				var removeElementBindings = (node) => {
+					this.bindings.forEach(binding => {
+						if (binding.indexOf(node)) {
+							binding.splice(binding.indexOf(node), 1)
+						}
+					})
+				}
+
+				var loopRemovedNodes = (removedNodes) => {
+					for (var i = 0; i < removedNodes.length; i++) {
+						if (removedNodes[i].nodeType !== 3 && !removedNodes[i].hasAttribute(`e1-if`)) {
+							removeElementBindings(removedNodes[i])
+						}
+					}
+				}
+
 				records.forEach((record) => {
 					if (record.addedNodes.length) {
 						loopAddedNodes(record.addedNodes)
+					}
+
+					if (record.removedNodes.length) {
+						loopRemovedNodes(record.removedNodes)
 					}
 				})
 			}
