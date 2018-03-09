@@ -75,6 +75,8 @@ class E1 {
 				}
 
 				var loopRemovedNodes = (removedNodes) => {
+					console.log("REMOVE", removedNodes.length);
+
 					for (var i = 0; i < removedNodes.length; i++) {
 						if (removedNodes[i].nodeType !== 3 && !removedNodes[i].hasAttribute(`e1-if`)) {
 							removeElementBindings(removedNodes[i])
