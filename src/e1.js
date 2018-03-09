@@ -74,7 +74,7 @@ class E1 {
 							var binding = self.bindings[p]
 
 							if (self.bindings[p].indexOf(node)) {
-								console.log(p, node);
+								// console.log(p, node);
 
 								// self.bindings[p].splice(self.bindings[p].indexOf(node), 1)
 							}
@@ -83,7 +83,7 @@ class E1 {
 				}
 
 				var loopRemovedNodes = (removedNodes) => {
-					console.log("REMOVE", removedNodes.length);
+					// console.log("REMOVE", removedNodes.length);
 
 					for (var i = 0; i < removedNodes.length; i++) {
 						if (removedNodes[i].nodeType !== 3 && !removedNodes[i].hasAttribute(`e1-if`)) {
@@ -93,12 +93,13 @@ class E1 {
 				}
 
 				records.forEach((record) => {
+					console.log(record)
 					if (record.addedNodes.length) {
 						loopAddedNodes(record.addedNodes)
 					}
 
 					if (record.removedNodes.length) {
-						loopRemovedNodes(record.removedNodes)
+						// loopRemovedNodes(record.removedNodes)
 					}
 				})
 			}
