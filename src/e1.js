@@ -19,6 +19,8 @@ class E1 {
 		this.subscribe = this.subscribe
 		this.updateBindings = this.updateBindings
 
+		var self = this
+
 		this.observer = new window.MutationObserver(
 			(records) => {
 
@@ -67,6 +69,7 @@ class E1 {
 				}
 
 				var removeElementBindings = (node) => {
+					console.log(self)
 					self.bindings.forEach(binding => {
 						if (binding.indexOf(node)) {
 							binding.splice(binding.indexOf(node), 1)
