@@ -69,12 +69,15 @@ class E1 {
 				}
 
 				var removeElementBindings = (node) => {
-					console.log(self)
-					self.bindings.forEach(binding => {
-						if (binding.indexOf(node)) {
-							binding.splice(binding.indexOf(node), 1)
+					for (var p in self.bindings) {
+						if (self.bindings[p]) {
+							var binding = self.bindings[p]
+
+							if (binding.indexOf(node)) {
+								binding.splice(binding.indexOf(node), 1)
+							}
 						}
-					})
+					}
 				}
 
 				var loopRemovedNodes = (removedNodes) => {
