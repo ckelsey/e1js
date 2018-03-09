@@ -67,7 +67,7 @@ class E1 {
 				}
 
 				var removeElementBindings = (node) => {
-					this.bindings.forEach(binding => {
+					self.bindings.forEach(binding => {
 						if (binding.indexOf(node)) {
 							binding.splice(binding.indexOf(node), 1)
 						}
