@@ -477,7 +477,6 @@ class E1 {
 	}
 
 	updateBindings(path, clone) {
-		console.log(`BINDINS`, path);
 		
 		var elements = this.bindings[path]
 		var subscribes = this.subscriptions[path]
