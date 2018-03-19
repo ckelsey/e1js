@@ -111,7 +111,7 @@ class E1 {
 		var cleanBindings = (binding) => {
 			var indexesToDelete = []
 			binding.forEach((el, index) => {
-				if (!el.parentNode) {
+				if (!el.parentNode || !window.document.body.contains(el)) {
 					indexesToDelete.push(index)
 				}else if(index + 1 > this.bindings.length){
 					for (var i = index + 1; i < this.bindings.length; i++){
