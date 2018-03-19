@@ -107,20 +107,32 @@ class E1 {
 		return element
 	}
 
-	cleanUp(){
-		var cleanBindings = (binding)=>{
-			binding.forEach((el, index)=>{
-				if(!el.parentNode){
-					binding.splice(index, 1)
+	cleanUp() {
+		var cleanBindings = (binding) => {
+			var indexesToDelete = []
+			binding.forEach((el, index) => {
+				if (!el.parentNode) {
+					indexesToDelete.push(index)
+				}else if(index + 1 > this.bindings.length){
+					for (var i = index + 1; i < this.bindings.length; i++){
+						if (el === this.bindings[i]){
+							indexesToDelete.push(index)
+							break
+						}
+					}
 				}
+			})
+
+			indexesToDelete.forEach(index=>{
+				this.bindings.splice(index, 1)
 			})
 		}
 
-		for(var b in this.bindings){
-			if(this.bindings[b]){
+		for (var b in this.bindings) {
+			if (this.bindings[b]) {
 				cleanBindings(this.bindings[b])
 
-				if (!this.bindings[b].length){
+				if (!this.bindings[b].length) {
 					delete this.bindings[b]
 				}
 			}
@@ -456,7 +468,7 @@ class E1 {
 
 		this.updateBindings(`@` + boundPath, updated)
 
-		window.requestAnimationFrame(()=>{
+		window.requestAnimationFrame(() => {
 			this.cleanUp()
 		})
 
@@ -503,7 +515,7 @@ class E1 {
 	}
 
 	updateBindings(path, clone) {
-		
+
 		var elements = this.bindings[path]
 		var subscribes = this.subscriptions[path]
 
