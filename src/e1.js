@@ -113,9 +113,9 @@ class E1 {
 			binding.forEach((el, index) => {
 				if (!el.parentNode || !window.document.body.contains(el)) {
 					indexesToDelete.push(index)
-				} else if (index + 1 > self.bindings.length){
-					for (var i = index + 1; i < self.bindings.length; i++){
-						if (el === self.bindings[i]){
+				} else if (index + 1 > binding.length){
+					for (var i = index + 1; i < binding.length; i++){
+						if (el === binding[i]){
 							indexesToDelete.push(index)
 							break
 						}
@@ -124,7 +124,7 @@ class E1 {
 			})
 
 			indexesToDelete.forEach(index=>{
-				self.bindings.splice(index, 1)
+				binding.splice(index, 1)
 			})
 		}
 
