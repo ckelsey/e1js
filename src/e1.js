@@ -1,3 +1,5 @@
+var self
+
 class E1 {
 	constructor() {
 		this.bindings = {}
@@ -19,7 +21,7 @@ class E1 {
 		this.subscribe = this.subscribe
 		this.updateBindings = this.updateBindings
 
-		var self = this
+		self = this
 
 		this.observer = new window.MutationObserver(
 			(records) => {
@@ -103,6 +105,26 @@ class E1 {
 		}
 
 		return element
+	}
+
+	cleanUp(){
+		var cleanBindings = (binding)=>{
+			binding.forEach((el, index)=>{
+				if(!el.parentNode){
+					binding.splice(index, 1)
+				}
+			})
+		}
+
+		for(var b in this.bindings){
+			if(this.bindings[b]){
+				cleanBindings(this.bindings[b])
+
+				if (!this.bindings[b].length){
+					delete this.bindings[b]
+				}
+			}
+		}
 	}
 
 	generateId() {
@@ -433,6 +455,10 @@ class E1 {
 		} catch (e) { }
 
 		this.updateBindings(`@` + boundPath, updated)
+
+		window.requestAnimationFrame(()=>{
+			this.cleanUp()
+		})
 
 		return newVal
 	}
